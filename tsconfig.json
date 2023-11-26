@@ -13,8 +13,12 @@
     "moduleResolution": "node",
     "paths": {
       "configs/*": ["./src/configs/*"],
+      "entities/*": ["./src/entities/*"],
+      "redis/*": ["./src/redis/*"],
       "routes/*": ["./src/routes/*"],
-      "services/*": ["./src/services/*"]
+      "services/*": ["./src/services/*"],
+      "types/*": ["./src/types/*"],
+      "validation/*": ["./src/validation/*"]
     }
   },
   "include": ["src/**/*.ts"]
