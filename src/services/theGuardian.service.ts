@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 
 import { AppDataSource } from "configs/database";
 import { InvalidSearchEntity, ValidSearchEntity } from "entities/index";
+import { logger } from "logger/logger";
 import { setCache, getCache } from "redis/index";
 import { ISectionResponse } from "types/response";
 import { sectionNameValidation } from "validation/sectionName";
@@ -16,10 +17,13 @@ const getGuardianApisBySection = async (req: Request, res: Response) => {
     const isValidSearch = sectionNameValidation(searchSection);
 
     if (!isValidSearch) {
+      logger.warn("Invalid search text", { searchSection });
+
       await AppDataSource.getRepository(InvalidSearchEntity).save({
         searchText: searchSection,
       });
-      res.status(400).json({
+
+      return res.status(400).json({
         status: 400,
         message: "Invalid search section",
       });
@@ -51,6 +55,10 @@ const getGuardianApisBySection = async (req: Request, res: Response) => {
     res.json(transformToRssFeed(data));
   } catch (error) {
     console.log(error);
+    logger.error("Error in fetching guardian api", {
+      error,
+      guardianUrl,
+    });
   }
 };
 
