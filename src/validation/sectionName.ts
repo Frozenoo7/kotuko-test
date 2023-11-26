@@ -1,4 +1,4 @@
-export const sectionNameValidation = (sectionName: string): Boolean => {
+export const sectionNameValidation = (sectionName: string): boolean => {
   const kebabCasePattern = /^[a-z]+(-[a-z]+)*$/;
 
   const isMatchedKebabCase = sectionName.match(kebabCasePattern);
